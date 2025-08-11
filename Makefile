@@ -5,7 +5,7 @@ NAME=minitalk
 DIR_GUARD=@mkdir -p $(@D)
 
 ###################FILE AND DIRECTORIES VARIABLES################
-C_FILES:= adam eve 
+C_FILES:= client server
 OBJ_DIR:=obj/
 SRC_DIR:=src/
 OBJ_DIR:=$(pwd)obj/
@@ -26,15 +26,13 @@ END="\\e[0m"
 ##################MAKE RULES####################################
 all : $(NAME)
 
-$(NAME): $(OBJS), $(LIB)
-	$(CC) $(CFLAGS) $(OBJS)-L./libft -lft -g -o $@
+$(NAME): $(LIB) $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -L../$(LIB) -I../$(LIB) -g -o $@
 	@echo "\n$(GREEN)==========          Compiled Minitalk          ==========$(END)\n"
 
 $(LIB): 
 	#cd into and compile libft (leaves .a on /libft)
 	make re -C $(LIB_DIR)
-	#cp to root
-	cp $(LIB_DIR)$(LIB) . 
 	@echo "\n$(BLUE)==========          Compiled Libft          ==========$(END)\n"
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
@@ -52,6 +50,8 @@ fclean: clean
 	rm -f $(NAME)
 	#cleaning libft library from /libft
 	rm -f $(LIB_DIR)$(LIB)
+	#cleaning libft objs
+	rm -f $(LIB_DIR)*.o
 	#cleaning libft from root
 	rm -f $(LIB)
 	@echo "\n$(RED)==========          REMOVED ALL          ===========$(END)\n" 

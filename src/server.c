@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   eve.c                                              :+:      :+:    :+:   */
+/*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: user <user@student.42school.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,11 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <signal.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <fcntl.h>
+#include "minitalk.h" 
 
 void	handler(int	sig)
 {
@@ -33,14 +29,10 @@ void	birth(void)
 
 int	main(void)
 {
-	int	fd;
 	int	pid;
-	const char *cid;
-
-	fd = open("eden", O_CREAT, O_RDWR);
+	
 	pid = getpid();
-	cid = ft_calloc((ft_strlen(atoi(pid)) + 1) * sizeof(char)) 
-	birth();
+	write(1, "pid, supposedly", 15);
 }
 
 
