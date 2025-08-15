@@ -23,11 +23,10 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	$(CC) -g $(CFLAGS) -I$(INC_DIR) -c $< -o $@
 
 clean:
-	@rm -f $(OBJS)
+	@rm -rf $(OBJ_DIR)
 	@echo "cleaned objects!"
 
 fclean: 
-	@rm -f $(OBJS)
 	@rm -f $(NAME)
 	@echo "cleaned objects and .a file!"
 
