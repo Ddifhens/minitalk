@@ -6,7 +6,7 @@ DIR_GUARD=@mkdir -p $(@D)
 C_FILES= ft_printf ft_putchar ft_seetype ft_printstr ft_putnbr ft_strlen ft_printptr ft_puthex ft_putunbr
 
 SRC_DIR=src/
-INC_DIR=include/
+INC_DIR=inc/
 OBJ_DIR=obj/
 
 SRCS= $(addprefix $(SRC_DIR), $(addsuffix .c, $(C_FILES)))

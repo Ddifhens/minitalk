@@ -46,7 +46,7 @@ $(BUILD_DIR)$(LIBFT):
 
 $(BUILD_DIR)$(PRT):
 	#compiling ft_printf
-	make -C $(PRT_DIR) 
+	@make -C $(PRT_DIR) 
 	#copy into /build 
 	$(DIR_GUARD)
 	cp $(PRT_DIR)$(PRT) $(BUILD_DIR)
@@ -56,10 +56,10 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	#making sure obj/ exists
 	$(DIR_GUARD)
 	#compiling into /objs
-	$(CC) -g -v $(CFLAGS) -c $< \
+	$(CC) -g $(CFLAGS) -c $< \
 		-Iinclude/ \
 		-I$(LIBFT_DIR)inc/ \
-		-I$(PRT_DIR)include/ \
+		-I$(PRT_DIR)inc/ \
 		-o $@
 
 clean:
