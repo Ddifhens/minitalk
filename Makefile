@@ -1,11 +1,13 @@
 ###################COMPILATION VARIABLES##########################
 CC= cc
 CFLAGS= -Wall -Werror -Wextra
-NAME=minitalk
+SER=server
+CLI=client
 DIR_GUARD=@mkdir -p $(@D)
 
 ###################FILE AND DIRECTORIES VARIABLES################
-C_FILES:= client server
+S_FILES:= server
+C_FILES:= client
 OBJ_DIR:=obj/
 SRC_DIR:=src/
 OBJ_DIR:=obj/
@@ -16,8 +18,10 @@ PRT_DIR:=$(LIB)ft_printf/
 PRT:=libftprintf.a
 BUILD_DIR:=build/
 
-SRCS:= $(addprefix $(SRC_DIR), $(addsuffix .c, $(C_FILES)))
-OBJS:= $(addprefix $(OBJ_DIR), $(addsuffix .o, $(C_FILES)))
+SSRCS:= $(addprefix $(SRC_DIR), $(addsuffix .c, $(S_FILES)))
+SOBJS:= $(addprefix $(OBJ_DIR), $(addsuffix .o, $(S_FILES)))
+CSRCS:= $(addprefix $(SRC_DIR), $(addsuffix .c, $(C_FILES)))
+COBJS:= $(addprefix $(OBJ_DIR), $(addsuffix .o, $(C_FILES)))
 
 ##################FORMATTING VARIABLES##########################
 
@@ -28,13 +32,19 @@ RED="\\e[31m"
 END="\\e[0m"
 
 ##################MAKE RULES####################################
-all : $(NAME)
+all : $(SER) $(CLI)
 
-$(NAME): $(BUILD_DIR)$(LIBFT) $(BUILD_DIR)$(PRT) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) \
+$(CLI): $(COBJS)
+	$(CC) $(C_FLAGS) $(COBJS) \
 	-L$(BUILD_DIR) -lft -lftprintf \
 	-o $@
-	@echo "\n$(GREEN)==========          Compiled Minitalk          ==========$(END)\n"
+	@echo "\n$(GREEN)==========          Compiled Client          ==========$(END)\n"
+
+$(SER): $(BUILD_DIR)$(LIBFT) $(BUILD_DIR)$(PRT) $(SOBJS)
+	$(CC) $(CFLAGS) $(SOBJS) \
+	-L$(BUILD_DIR) -lft -lftprintf \
+	-o $@
+	@echo "\n$(GREEN)==========          Compiled Server          ==========$(END)\n"
 
 $(BUILD_DIR)$(LIBFT): 
 	#cd into and compile libft
@@ -63,12 +73,13 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 		-o $@
 
 clean:
-	rm -f $(OBJS)
+	rm -f $(SOBJS)
 	@echo "\n$(RED)==========          REMOVED TEMP          ==========$(END)\n"
 
 fclean: clean
 	#cleaning output program
 	rm -f $(NAME)
+	rm -f $(CLI)
 	rm -rf $(BUILD_DIR)
 	#cleaning libft library from /libft
 	make fclean -C $(LIBFT_DIR)

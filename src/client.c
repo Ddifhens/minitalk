@@ -12,3 +12,23 @@
 
 #include "minitalk.h"
 
+unsigned int itob(char c)
+{
+	if (c == 0)
+		return (0);
+	if (c == 1)
+		return (1);
+	return (c % 2) + 10 * itob(c / 2);
+}
+int	main(int argc, char **argv)
+{
+	pid_t	pid;
+
+	if (argc != 3)
+	{
+		ft_printf("invalid parameters");
+		return (0); 
+	}
+	pid = ft_atoi(argv[1]);
+	kill(pid, SIGINT);
+}

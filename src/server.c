@@ -15,7 +15,7 @@
 void	handler(int	sig)
 {
 	(void)sig;
-	printf("ping!");
+	ft_printf("ping!");
 }
 
 void	birth(void)
@@ -24,15 +24,16 @@ void	birth(void)
 
 	act.sa_handler = &handler;
 	sigaction(SIGINT, &act, NULL);
-	pause();
 }
 
 int	main(void)
 {
-	char	*str;
+	pid_t pid;
 
-	str = "123456789";
-	ft_printf("%s", ft_strdup(str));
+	pid = getpid();
+	birth();
+	ft_printf("%u", pid);
+	pause();
 }
 
 
