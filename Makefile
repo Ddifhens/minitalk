@@ -74,11 +74,13 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 
 clean:
 	rm -f $(SOBJS)
+	rm -f $(COBJS)
 	@echo "\n$(RED)==========          REMOVED TEMP          ==========$(END)\n"
 
 fclean: clean
 	#cleaning output program
 	rm -f $(NAME)
+	rm -f $(SER)
 	rm -f $(CLI)
 	rm -rf $(BUILD_DIR)
 	#cleaning libft library from /libft
