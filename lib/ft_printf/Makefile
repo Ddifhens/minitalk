@@ -26,7 +26,7 @@ clean:
 	@rm -rf $(OBJ_DIR)
 	@echo "cleaned objects!"
 
-fclean: 
+fclean: clean
 	@rm -f $(NAME)
 	@echo "cleaned objects and .a file!"
 

@@ -20,6 +20,8 @@ unsigned int itob(char c)
 		return (1);
 	return (c % 2) + 10 * itob(c / 2);
 }
+
+
 int	main(int argc, char **argv)
 {
 	pid_t	pid;
@@ -30,5 +32,4 @@ int	main(int argc, char **argv)
 		return (0); 
 	}
 	pid = ft_atoi(argv[1]);
-	kill(pid, SIGINT);
 }
