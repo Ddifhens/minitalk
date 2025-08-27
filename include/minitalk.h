@@ -6,7 +6,7 @@
 /*   By: user <user@student.42school.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 12:50:47 by user              #+#    #+#             */
-/*   Updated: 2025/08/02 16:26:17 by user             ###   ########.fr       */
+/*   Updated: 2025/08/27 14:01:28 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
+
+char	**ft_freeall( char **save);
 
 #endif

@@ -6,8 +6,8 @@ CLI=client
 DIR_GUARD=@mkdir -p $(@D)
 
 ###################FILE AND DIRECTORIES VARIABLES################
-S_FILES:= server
-C_FILES:= client
+S_FILES:= server minitalk_utils
+C_FILES:= client minitalk_utils
 OBJ_DIR:=obj/
 SRC_DIR:=src/
 OBJ_DIR:=obj/

@@ -23,7 +23,8 @@ void	birth(void)
 	struct sigaction act;
 
 	act.sa_handler = &handler;
-	sigaction(SIGINT, &act, NULL);
+	sigaction(SIGUSR1, &act, NULL);
+	sigaction(SIGUSR2, &act, NULL);
 }
 
 int	main(void)
