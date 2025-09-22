@@ -5,58 +5,76 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: user <user@student.42school.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/02 12:58:58 by user              #+#    #+#             */
-/*   Updated: 2025/08/27 14:01:18 by user             ###   ########.fr       */
+/*   Created: 2025/09/22 12:54:23 by user              #+#    #+#             */
+/*   Updated: 2025/09/22 13:58:01 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "minitalk.h" 
 
-unsigned int itob(char c)
+char *make2comp(int a)
 {
-	if (c == 0)
-		return (0);
-	if (c == 1)
-		return (1);
-	return (c % 2) + 10 * itob(c / 2);
-}
+	char	*str;
+	unsigned char	i;
+	char	b;
 
-char	*bintoc(unsigned int b, char *str)
-{
-	while (b)
-	{
-		*str = b % 10;
-		b = b / 10;
-		str++;
-	}
-	return (str);
-}
-
-int	main(int argc, char **argv)
-{
-	pid_t			pid;
-	char			**bin;
-	int				argsize;
-	char			*tmp;
-	int				i;
-
+	str = (char*)malloc(9 * (sizeof(char)));
 	i = 0;
-	if (argc != 3)
-		return (write(2, "invalid parameters\n", 20), 1); 
-	argsize = ft_strlen(argv[2]);
-	bin = ft_calloc(argsize, sizeof(char *));
-	while (i < argsize)
+	b = 64;
+	if (a&-128)
+		str[i++] = '1';
+	else
+		str[i++] = '0';
+	while (b != 0)
 	{
-		tmp = calloc(8, sizeof(char));
-		if (!tmp)
-			return(ft_freeall(bin), write(2, "invalid allocation at tmp\n", 27), 1);
-		bin[i] = tmp;
-		i++;
+		if(a&b)
+			str[i++] = '1';
+		else
+			str[i++] = '0';
+		b = b >> 1;
 	}
-	if (!bin)
-		return (write(2, "invalid alocation\n", 19), 1);
-	//bin = ft_strdup(ft_itoa(itob(argv[2][0])));
-	ft_printf("%s", bin);
-	pid = ft_atoi(argv[1]);
-	(void)pid;
+	str[i] = '\0';
+	return(str);
+}
+
+int writetoarray(char **str, char *arg)
+{
+	unsigned char	x;
+	
+	x = 0;
+	while (arg[x])
+	{
+		str[x] = make2comp(arg[x]);
+		if (!str[x])
+			return (0);
+		x++;
+	}
+	return(1);
+}
+
+void printall(char **str, int length)
+{
+	unsigned char x;
+
+	x = 0;
+	while (x < length)
+		ft_printf("%s\n", str[x++]);
+}
+
+int	main (int argc, char **argv)
+{
+	char	**sends;
+	char	length;
+//	unsigned char x;
+
+	length = ft_strlen(argv[1]);
+	if (argc <= 1 || length < 1)
+		return(write(2, "invalid arguments\n", 18), 0);
+	sends = ft_calloc(length + 1, sizeof(char *));
+	if (!sends)
+		return(ft_freeall(sends), 0);
+	writetoarray(sends, argv[1]);
+	printall(sends, length);
+	ft_freeall(sends);
+	return (0);
 }
