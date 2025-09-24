@@ -22,5 +22,6 @@
 # include <fcntl.h>
 
 char	**ft_freeall( char **save);
+char	*make2comp(int a);
 
 #endif

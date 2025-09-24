@@ -61,19 +61,36 @@ void	printall(char **str, int length)
 		ft_printf("%s\n", str[x++]);
 }
 
+int	sendall(char **str, int pid)
+{
+	int	x;
+
+	x = 0;
+	while (str[0][x])
+	{
+		if (str[0][x] == '0')
+			kill(pid, SIGUSR1);
+		else if (str[0][x] == '1')
+			kill(pid, SIGUSR2);
+		x++;
+	}
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	char	**sends;
 	char	length;
-
-	length = ft_strlen(argv[1]);
-	if (argc <= 1 || length < 1)
+	
+	if (argc <= 2)
 		return (write(2, "invalid arguments\n", 18), 0);
+	length = ft_strlen(argv[2]);
 	sends = ft_calloc(length + 1, sizeof(char *));
 	if (!sends)
 		return (ft_freeall(sends), 0);
-	writetoarray(sends, argv[1]);
+	writetoarray(sends, argv[2]);
 	printall(sends, length);
+	sendall(sends, ft_atoi(argv[1]));
 	ft_freeall(sends);
 	return (0);
 }
