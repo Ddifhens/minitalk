@@ -13,13 +13,13 @@
 #ifndef MINITALK_H
 # define MINITALK_H
 
-#include "libft.h"
-#include "ft_printf.h"
-#include <signal.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <fcntl.h>
+# include "libft.h"
+# include "ft_printf.h"
+# include <signal.h>
+# include <unistd.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <fcntl.h>
 
 char	**ft_freeall( char **save);
 

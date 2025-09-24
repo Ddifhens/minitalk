@@ -12,7 +12,7 @@
 
 #include "minitalk.h" 
 
-void	handler(int	sig)
+void	handler(int sig)
 {
 	(void)sig;
 	ft_printf("ping!");
@@ -20,7 +20,7 @@ void	handler(int	sig)
 
 void	birth(void)
 {
-	struct sigaction act;
+	struct sigaction	act;
 
 	act.sa_handler = &handler;
 	sigaction(SIGUSR1, &act, NULL);
@@ -29,12 +29,10 @@ void	birth(void)
 
 int	main(void)
 {
-	pid_t pid;
+	pid_t	pid;
 
 	pid = getpid();
 	birth();
 	ft_printf("%u", pid);
 	pause();
 }
-
-

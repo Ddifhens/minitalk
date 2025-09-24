@@ -12,35 +12,35 @@
 
 #include "minitalk.h" 
 
-char *make2comp(int a)
+char	*make2comp(int a)
 {
-	char	*str;
+	char			*str;
 	unsigned char	i;
-	char	b;
+	char			b;
 
-	str = (char*)malloc(9 * (sizeof(char)));
+	str = (char *)malloc(9 * (sizeof(char)));
 	i = 0;
 	b = 64;
-	if (a&-128)
+	if (a & -128)
 		str[i++] = '1';
 	else
 		str[i++] = '0';
 	while (b != 0)
 	{
-		if(a&b)
+		if (a & b)
 			str[i++] = '1';
 		else
 			str[i++] = '0';
 		b = b >> 1;
 	}
 	str[i] = '\0';
-	return(str);
+	return (str);
 }
 
-int writetoarray(char **str, char *arg)
+int	writetoarray(char **str, char *arg)
 {
 	unsigned char	x;
-	
+
 	x = 0;
 	while (arg[x])
 	{
@@ -49,30 +49,29 @@ int writetoarray(char **str, char *arg)
 			return (0);
 		x++;
 	}
-	return(1);
+	return (1);
 }
 
-void printall(char **str, int length)
+void	printall(char **str, int length)
 {
-	unsigned char x;
+	unsigned char	x;
 
 	x = 0;
 	while (x < length)
 		ft_printf("%s\n", str[x++]);
 }
 
-int	main (int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	char	**sends;
 	char	length;
-//	unsigned char x;
 
 	length = ft_strlen(argv[1]);
 	if (argc <= 1 || length < 1)
-		return(write(2, "invalid arguments\n", 18), 0);
+		return (write(2, "invalid arguments\n", 18), 0);
 	sends = ft_calloc(length + 1, sizeof(char *));
 	if (!sends)
-		return(ft_freeall(sends), 0);
+		return (ft_freeall(sends), 0);
 	writetoarray(sends, argv[1]);
 	printall(sends, length);
 	ft_freeall(sends);
