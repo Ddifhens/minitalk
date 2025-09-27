@@ -12,7 +12,7 @@
 
 #include "minitalk.h" 
 
-char	*make2comp(int a)
+char	*char2comp(int a)
 {
 	char			*str;
 	unsigned char	i;
@@ -44,7 +44,7 @@ int	writetoarray(char **str, char *arg)
 	x = 0;
 	while (arg[x])
 	{
-		str[x] = make2comp(arg[x]);
+		str[x] = char2comp(arg[x]);
 		if (!str[x])
 			return (0);
 		x++;
@@ -64,15 +64,22 @@ void	printall(char **str, int length)
 int	sendall(char **str, int pid)
 {
 	int	x;
+	int	y;
 
-	x = 0;
-	while (str[0][x])
+	y = 0;
+	while (str[y])
 	{
-		if (str[0][x] == '0')
-			kill(pid, SIGUSR1);
-		else if (str[0][x] == '1')
-			kill(pid, SIGUSR2);
-		x++;
+		x = 0;
+		while (str[y][x])
+		{
+			if (str[y][x] == '0')
+				kill(pid, SIGUSR1);
+			else if (str[y][x] == '1')
+				kill(pid, SIGUSR2);
+			usleep (10);
+			x++;
+		}
+		y++;
 	}
 	return (0);
 }
@@ -81,7 +88,7 @@ int	main(int argc, char **argv)
 {
 	char	**sends;
 	char	length;
-	
+
 	if (argc <= 2)
 		return (write(2, "invalid arguments\n", 18), 0);
 	length = ft_strlen(argv[2]);

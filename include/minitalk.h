@@ -23,5 +23,6 @@
 
 char	**ft_freeall( char **save);
 char	*make2comp(int a);
+int		ft_power(int base, int exp);
 
 #endif

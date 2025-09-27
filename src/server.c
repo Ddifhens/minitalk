@@ -12,39 +12,90 @@
 
 #include "minitalk.h" 
 
+int	g_x = 0;
+
 void	handler(int sig)
 {
 	if (sig == SIGUSR1)
-		ft_printf("sigusr1");
+	{
+		g_x = 0;
+	}
 	if (sig == SIGUSR2)
-		ft_printf("sigusr2");
+	{
+		g_x = 1;
+	}
 }
 
 void	birth(void)
 {
 	struct sigaction	act;
 
+	(void)act.sa_mask;
+	act.sa_flags = 0;
 	act.sa_handler = &handler;
 	sigaction(SIGUSR1, &act, NULL);
 	sigaction(SIGUSR2, &act, NULL);
 }
 
+char	*getbyte(char *dump)
+{
+	int	x;
+
+	x = 0;
+	while (x < 8)
+	{
+		if (g_x == 1)
+			dump[x] = 1;
+		if (g_x == 0)
+			dump[x] = 0;
+		pause();
+		x++;
+	}
+	return (dump);
+}
+
+int	comp2int(char *byte)
+{
+	int	x;
+	int nb;
+
+	nb = 1;
+	x = 0;
+	if (byte[x] == 1)
+		nb = nb + ((ft_power(2, 7)) * (-1));
+	x++;
+	while (byte[x])
+	{
+		if (byte[x] == 1)
+			nb = nb + (ft_power(2, (7 - x)));
+		x++;
+	}
+	return (nb);	
+}
+
 int	main(void)
 {
-	char	*twos;
 	pid_t	pid;
+	int		x;
+	//int		length;
+	char	*byte;
+	char	c;
 
-	twos = ft_calloc(9, sizeof (char));
-	(void)twos;
+	byte = ft_calloc(9, sizeof (char));
+	if (!byte)
+		return (write(2, "invalid allocation", 18), -1);
+	x = 0;
 	pid = getpid();
 	birth();
-	ft_printf("%u", pid);
+	ft_printf("%u\n === Ready to receive! ===", pid);
+	//length = comp2int(getbyte(byte));
 	pause();
-	pause();
-	pause();
-	pause();
-	pause();
-	pause();
-	pause();
-
+	while (!x)
+	{
+		byte = getbyte(byte);
+		ft_printf("%s\n", byte);
+		c = comp2int(byte);
+		write(1, &c, 1);
+		bzero(byte, 9);
+	}
 }

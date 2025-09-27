@@ -12,6 +12,17 @@
 
 #include "minitalk.h"
 
+int ft_power(int base, int exp) 
+{
+    if (exp < 0) {
+        return -1; 
+    }
+    if (exp == 0) {
+        return 1; 
+    }
+    return base * ft_power(base, exp - 1);
+}
+
 char	**ft_freeall( char **save)
 {
 	char	**temp;
