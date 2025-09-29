@@ -8,7 +8,6 @@ DIR_GUARD=@mkdir -p $(@D)
 ###################FILE AND DIRECTORIES VARIABLES################
 S_FILES:= server
 C_FILES:= client
-OBJ_DIR:=obj/
 SRC_DIR:=src/
 OBJ_DIR:=obj/
 LIB:=lib/
@@ -32,6 +31,8 @@ RED="\\e[31m"
 END="\\e[0m"
 
 ##################MAKE RULES####################################
+$(NAME): all
+
 all : $(SER) $(CLI)
 
 $(CLI): $(COBJS)
@@ -79,7 +80,6 @@ clean:
 
 fclean: clean
 	#cleaning output program
-	rm -f $(NAME)
 	rm -f $(SER)
 	rm -f $(CLI)
 	rm -rf $(BUILD_DIR)
@@ -92,3 +92,5 @@ re:fclean all
 
 test: re
 	@echo "no tests implemented :( " 
+
+.PHONY: re fclean all clean
