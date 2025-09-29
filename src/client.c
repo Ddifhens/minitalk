@@ -5,27 +5,27 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: user <user@student.42school.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/22 12:54:23 by user              #+#    #+#             */
-/*   Updated: 2025/09/22 13:58:01 by user             ###   ########.fr       */
+/*   Created: 2025/09/28 13:17:00 by user              #+#    #+#             */
+/*   Updated: 2025/09/28 14:11:08 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h" 
+#include "minitalk.h"
 
-char	*char2comp(int a)
+char	*char2comp(char a)
 {
 	char			*str;
 	unsigned char	i;
 	char			b;
 
-	str = (char *)malloc(9 * (sizeof(char)));
+	str = ft_calloc(9, sizeof (char));
 	i = 0;
 	b = 64;
 	if (a & -128)
 		str[i++] = '1';
 	else
 		str[i++] = '0';
-	while (b != 0)
+	while (b != 0 && b > 0)
 	{
 		if (a & b)
 			str[i++] = '1';
@@ -33,71 +33,45 @@ char	*char2comp(int a)
 			str[i++] = '0';
 		b = b >> 1;
 	}
-	str[i] = '\0';
 	return (str);
 }
 
-int	writetoarray(char **str, char *arg)
+void	send(int pid, char a)
 {
-	unsigned char	x;
+	unsigned char	i;
+	char			*temp;
 
-	x = 0;
-	while (arg[x])
+	i = 0;
+	temp = char2comp(a);
+	while (temp[i])
 	{
-		str[x] = char2comp(arg[x]);
-		if (!str[x])
-			return (0);
-		x++;
-	}
-	return (1);
-}
-
-void	printall(char **str, int length)
-{
-	unsigned char	x;
-
-	x = 0;
-	while (x < length)
-		ft_printf("%s\n", str[x++]);
-}
-
-int	sendall(char **str, int pid)
-{
-	int	x;
-	int	y;
-
-	y = 0;
-	while (str[y])
-	{
-		x = 0;
-		while (str[y][x])
+		if (temp[i] =='1')
 		{
-			if (str[y][x] == '0')
-				kill(pid, SIGUSR1);
-			else if (str[y][x] == '1')
-				kill(pid, SIGUSR2);
-			usleep (10);
-			x++;
+			kill(pid, SIGUSR2);
 		}
-		y++;
+		else
+		{
+			kill(pid, SIGUSR1);
+		}
+		i++;
+		usleep(42);
 	}
-	return (0);
+	free(temp);
 }
 
 int	main(int argc, char **argv)
 {
-	char	**sends;
-	char	length;
+	int			pid;
+	char		*str;
+	int			i;
 
-	if (argc <= 2)
-		return (write(2, "invalid arguments\n", 18), 0);
-	length = ft_strlen(argv[2]);
-	sends = ft_calloc(length + 1, sizeof(char *));
-	if (!sends)
-		return (ft_freeall(sends), 0);
-	writetoarray(sends, argv[2]);
-	printall(sends, length);
-	sendall(sends, ft_atoi(argv[1]));
-	ft_freeall(sends);
+	if (argc > 3)
+		return (write(2, "ERROR: invalid parameters", 25), -1);
+	pid = ft_atoi(argv[1]);
+	str = argv[2];
+	i = 0;
+	while (str[i])
+		send(pid, str[i++]);
+	send(pid, '\0');
 	return (0);
 }
